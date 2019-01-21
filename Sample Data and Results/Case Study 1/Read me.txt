@@ -1,0 +1,6 @@
+The HeLa dataset, which was used in case study 1, was obtained from Kelleher Lab [1]. 
+The dataset comprised of 10 MS spectra of Hela Histone H4 protein acquired using a Q-FTICR hybrid mass spectrometer.
+The spectra were calibrated externally using an electron-capture dissociation (ECD) bovine ubiquitin spectrum. 
+
+
+[1] (Frank,A.M., Pesavento,J.J., Mizzen,C.A., Kelleher,N.L. and Pevzner,P.A. (2008) Interpreting top-down mass spectra using spectral alignment. Anal. Chem., 80, 2499–2505.)

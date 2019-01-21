@@ -1,0 +1,17 @@
+Output File Format: FASTA
+Thrash Paramters: None
+Database Selected: e_coli_K12_MG1655_NCBI_2011_12_21.fasta
+Protein Mass (Da): 0
+Filter DB for intact Protein Mass: No
+Tune Whole Protein Molecular Weight: No
+Fragmentation Type Selected: ETD
+Molecular Weight Tolerance: 500
+Peptide Tolerance: 15
+PTM Tolerance: 0.5
+Molecular Weight Tolerance Unit: Da
+Peptide Tolerance Unit: ppm
+Minimum Length of Sequence Tag: 3
+Tolerance For Each Hop: 0.1
+Tolerance for Whole EST: 0.45
+Auto-Tune Intact Mass: 0
+Blind PTM Search: 0

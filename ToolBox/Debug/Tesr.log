@@ -1,0 +1,3 @@
+<<<<<<<<<<<<<<<<<<<<<error report>>>>>>>>>>>>>>>>>> 
+27-Jul-2017 15:40:24 
+Output argument "Candidate_ProteinsList_MW_score" (and maybe others) not assigned during call to "Score_Mol_Weight".

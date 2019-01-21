@@ -1,0 +1,5 @@
+Case study II employed Escherichia coli K-12 MG1655 dataset obtained from Liu Lab [1]. 
+The dataset was acquired using an LTQ Orbitrap Velos mass spectrometer in an alternating fragmentation setting.
+The resulting data comprised of two sets of spectra, each containing 2027 scans from collision-induced dissociation (CID) and electron-transfer dissociation (ETD), respectively. 
+
+[1] Kou,Q., Xun,L. and Liu,X. (2016) TopPIC: a software tool for top-down mass spectrometry-based proteoform identification and characterization. Bioinformatics, 32, 3495–3497.
