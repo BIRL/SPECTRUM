@@ -737,7 +737,8 @@ function pushbutton_HandleZIon_Callback(~, ~, ~)
 f = filesep;
 setappdata(0,'Title','SPECTRUM');
 addpath(strcat(pwd,f,'Fragments'));
-setappdata(0,'HandleIon',anb);
+data = anb;
+setappdata(0,'HandleIon',data);
 rmpath(strcat(pwd,f,'Fragments'));
 
 function menu_Fragmentation_Callback(hObject, ~, ~)
