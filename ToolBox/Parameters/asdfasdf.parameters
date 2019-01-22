@@ -1,16 +1,16 @@
 Experiment:Single
 Database Selected: uniprot_human.fasta
-Protein Mass (Da): 11397.3
+Protein Mass (Da): 49762
 Filter DB for intact Protein Mass: Yes
 Tune Whole Protein Molecular Weight: No
-Fragmentation Type Selected: ECD
+Fragmentation Type Selected: ETD
 Molecular Weight Tolerance: 500
 Peptide Tolerance: 15
 PTM Tolerance: 0.5
 Molecular Weight Tolerance Unit: Da
 Peptide Tolerance Unit: ppm
-Blind PTM Search: Yes
-Truncated Protein: Yes
+Blind PTM Search: No
+Truncated Protein: No
 
 Filter PSTs: Yes
 Minimum Length of Sequence Tag:  3
