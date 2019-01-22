@@ -23,7 +23,7 @@ scanReadComplete = 0; % For progressbar
 countofScansTotal = 6000; % progressbar for 6000 scans
 
 f = filesep;
-inputfile = fopen(strcat(directory,f,fileName));
+inputfile = fopen(strcat(directory, f, fileName));
 FileNameIndex = 0;
 while ~feof(inputfile)
     data=fgetl(inputfile);

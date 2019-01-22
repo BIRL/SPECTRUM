@@ -301,7 +301,7 @@ elseif (strcmpi(extension,'.mzxml'))
     progressbar(0.4/3);
     deconvmzxml = '';
     try
-        deconvmzxml = system(['java -Xmx8G -jar MsDeconvConsole.jar'  ' ' path]);
+        deconvmzxml = system(['java -Xmx200M -jar MsDeconvConsole.jar'  ' ' path]); %Dr.Safee     -Xmx200M
     catch Exception
         try
             deconvmzxml = system(['java -Xmx4G -jar MsDeconvConsole.jar'  ' ' path]);
@@ -311,19 +311,21 @@ elseif (strcmpi(extension,'.mzxml'))
         end
     end
     progressbar(2.3/3); %Progressbar
-    fullfilename = strcat((fliplr(erase(fliplr(path),'LMXzm.'))),'_msdeconv.mgf'); % name with full directory
-    Directory = (strcat(pwd,'\Data\ExampleFile\mzXML\'));
+    
+    fullfilename = get(handles.edit_ExperimentalData,'String');
+    fullfilename = strrep(fullfilename, '.mzXML', '_msdeconv.mgf');
+    %Directory = get(handles.edit_ExperimentalData,'String');
     [filepath,file,ext] = fileparts(fullfilename);
     addpath(strcat(pwd,'\Datareader')) % For adding into the path of MGF_Reader.m
     file = strcat(file,ext);
     progressbar(2.8/3); %Progressbar
-    MGF_Reader(Directory,file);
+    MGF_Reader(filepath, file);
     
-    DirectoryContents=dir(fullfile(Directory, '*.txt'));
+    DirectoryContents=dir(fullfile(filepath, '*.txt'));
     previous = '';
     progressbar('SPECTRUM is importing data. Please wait...');
     for i= 1:size(DirectoryContents,1)
-        SS = strcat(Directory,DirectoryContents(i).name);
+        SS = strcat(filepath,f,DirectoryContents(i).name);
         Imported_Data =  importdata(SS);
         progressbar(i/(size(DirectoryContents,1)));
         if(numel(Imported_Data)>numel(previous))
@@ -345,7 +347,8 @@ elseif (strcmpi(extension,'.mzml'))
     file = fliplr(strtok(fliplr(path),f));
     Directory = path(1:numel(path)-numel(file));
     
-    fullfilename_mzXML = strcat((fliplr(erase(fliplr(path),'LMzm.'))),'.mzxml'); % name with full directory
+    fullfilename = [Directory file];
+    fullfilename_mzXML = strrep(fullfilename, '.mzML', '.mzXML');
     %setenv('OPENMS_DATA_PATH', [pwd '\OpenMS\']);
     setenv('OPENMS_DATA_PATH', [pwd '\OpenMS\share']);
     system([pwd '\OpenMS\FileConverter.exe -in' ' ' strcat(Directory, file) ' ' '-out' ' ' fullfilename_mzXML]);
@@ -353,7 +356,8 @@ elseif (strcmpi(extension,'.mzml'))
     deconvmzxml = system(['java -jar MsDeconvConsole.jar'  ' ' fullfilename_mzXML]);
     progressbar(2.89/3);
     
-    fullfilename = strcat((fliplr(erase(fliplr(path),'LMzm.'))),'_msdeconv.mgf'); % name with full directory
+    
+    fullfilename = strrep(fullfilename_mzXML, '.mzXML', '_msdeconv.mgf');
     
     [filepath,file,ext] = fileparts(fullfilename);
     addpath(strcat(pwd,'\Datareader')) % For adding into the path of MGF_Reader.m
@@ -681,8 +685,8 @@ set(handles.text_TunedMassUnit,'Enable','on'); % Dalton text
 set(handles.text_MSdataFile,'String','MS Data File');
 set (handles.radiobutton_SingleSearch,'Value',1);
 set (handles.radiobutton_BatchMode,'Value',0);
-set(handles.text_SingleFileType,'Visible','on'); 
-set(handles.menu_SingleFileType,'Visible','on'); 
+set(handles.text_SingleFileType,'Visible','off'); 
+set(handles.menu_SingleFileType,'Visible','off'); 
 pushbutton_Reset_Callback(hObject, eventdata, handles);
 HandleIon{1,1}=0;
 HandleIon{2,1}=0;
@@ -1810,9 +1814,9 @@ try
     if(get(handles.radiobutton_SingleSearch,'Value') == 1) % Load Settings for SINGLE Search Mode
         Settings_File = fopen(fullfile(strcat(pwd,f,'Settings',f,'single_default.settings')));
         set(handles.text_SingleFileType,'Value',1);
-        set(handles.text_SingleFileType,'Visible','on');
+        set(handles.text_SingleFileType,'Visible','off');
         set(handles.menu_SingleFileType,'Value',1);
-        set(handles.menu_SingleFileType,'Visible','on');
+        set(handles.menu_SingleFileType,'Visible','off');
     else % Load Settings for BATCH Search Mode
         Settings_File = fopen(fullfile(strcat(pwd,f,'Settings',f,'batch_default.settings')));
         set(handles.menu_BatchFileType,'Value',1);
