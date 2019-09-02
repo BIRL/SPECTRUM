@@ -28,8 +28,8 @@ end
 SliderValue = (SliderValue * Intact_Protein_Mass)/ (10^6);
 
 % Calculate Peak Sums and shortlist those falling within user specified tol.
-for i = 1 : size(PeaksData.Peaks_List_MolWt,1)-2
-    for j = i+1 : size(PeaksData.Peaks_List_MolWt,1)-1
+for i = 1 : size(PeaksData.Peaks_List_MolWt,1) %20190902 Minor Bug Fix
+    for j = i+1 : size(PeaksData.Peaks_List_MolWt,1) %20190902 Minor Bug Fix
         %%%% Neutral Mass Added in the fragment sums to accomodate missing mass
         PeaksData.Sum_of_MolWt = PeaksData.Peaks_List_MolWt(i,1) + PeaksData.Peaks_List_MolWt(j,1) + str2num(NeutralMass);         %sum up one MW fragment with all the fragments present after it
         PeaksData.Fragment_Max_Intensity = (PeaksData.Peaks_List_Intensity (i) + PeaksData.Peaks_List_Intensity (j)) / 2;
