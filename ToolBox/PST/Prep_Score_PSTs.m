@@ -108,9 +108,8 @@ if not(isempty(Tag_Ladder))
                 
             end
         end
-        
-        %%%
-        if(Hop_threshold>1.5)
+
+        if (double(string(Hop_threshold))>1.5) %20200124 Bug Fix  %%(Hop_threshold>1.5)
             ind_se=strfind(Tag_Ladder{i}{1},'Q');
             if not(isempty(ind_se))
                 j=j+1;
