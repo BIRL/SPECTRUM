@@ -31,9 +31,10 @@ for num = 1 : numel(Tags_ladder) % for number of tags in the tag ladder
         end
         no_of_occournaces=number_of_tags_found ;
         if(isnan(Tags_ladder{1, idx}{1, 4}))
-            Final_EST_Score = Final_EST_Score +(no_of_occournaces*(  Tags_ladder{1, idx}{1, 2} + Tags_ladder{1, idx}{1, 3}));
+            Final_EST_Score = Final_EST_Score +(no_of_occournaces*( Tags_ladder{1, idx}{1, 2} + Tags_ladder{1, idx}{1, 3}));
         else
-            Final_EST_Score = Final_EST_Score +(no_of_occournaces*( Tags_ladder{1, idx}{1, 2 } + Tags_ladder{1, idx}{1, 3} + Tags_ladder{1, idx}{1, 4})); % simple sum right now
+            %%%20200206 Formula Updated
+            Final_EST_Score = Final_EST_Score +(no_of_occournaces*(Tags_ladder{1, idx}{1, 3} + Tags_ladder{1, idx}{1, 4})); % simple sum right now
         end
     end
     idx=idx-1;
