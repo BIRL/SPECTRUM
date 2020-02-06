@@ -178,7 +178,7 @@ for i = 1:numel(Candidate_ProteinsList_Decoy)
   fprintf( fid, '%s\n', protein.Sequence);
 end
 fclose(fid);
-msgbox('Decoy DB Generated!'); 
+msgbox('Decoy DB Generated at Selected Folder with filename DecoyDB.fasta!'); %Updated 20200206
 
 
 
