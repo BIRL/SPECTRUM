@@ -51,7 +51,7 @@ for index = 1: numel(Candidate_ProteinsListInput)
     start = ceil((Protein_ExperimentalMW + MW_threshold) / 168)-1;
     
     LeftIons = LeftIonsBackUp; %%%%
-    for m = start:2:ProteinLength
+    for m = start:1:ProteinLength %20200210 Updated By  start:2:ProteinLength
         if LeftIons(m) - Protein_ExperimentalMW > MW_threshold
             PreTruncationIndex = m;
             break;
@@ -117,7 +117,7 @@ for index = 1: numel(Candidate_ProteinsListInput)
     RightIons = RightIonsBackUp;
     
     start = ceil((Protein_ExperimentalMW + MW_threshold) / 168)-1;
-    for m = start:2:ProteinLength
+    for m = start:1:ProteinLength %20200210 Updated By  start:2:ProteinLength
         if RightIons(m) - Protein_ExperimentalMW > MW_threshold
             PreTruncationIndex = m;
             break;
