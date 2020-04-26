@@ -16,7 +16,7 @@ PTM_tolerance = str2double(PTM_tolerance);
 Sites = {};
 
 mod_weight = -0.984016;
-mod_name = 'Acetylation';
+mod_name = 'Amidation';  %%Updated 20200426
 site = 'F';
 x=0;
 
