@@ -64,7 +64,7 @@ for i = 1:size(protein_sequence, 2);
                 case {'C'};
                     score = 0;
                 otherwise
-                    score = -0.083;
+                    score = 0;  %%-0.083  %Updated 20200426
                     
             end
         end
