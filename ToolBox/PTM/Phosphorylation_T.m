@@ -322,7 +322,7 @@ for i = 1:size(protein_sequence, 2); %loop will run over the whole protein lengt
         
         %it will score amino acid at position i+5
         if(size(protein_sequence, 2)>=i+5)
-            m=(protein_sequence (1, i+3));
+            m=(protein_sequence (1, i+5));  %Updated 20200426
             switch protein_sequence (1, i+5)
                 case {'A' 'R' 'K' 'L' 'T'}
                     score = score * 0.07;
