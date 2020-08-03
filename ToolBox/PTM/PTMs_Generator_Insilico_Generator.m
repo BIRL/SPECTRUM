@@ -135,14 +135,10 @@ if(isempty(structs_array{1}) && ~isempty(All_Fixed_PTMs))
     Modified_Protein.PTM_score = 1- exp(-Modified_Protein.PTM_score/3);
     Modified_Protein_Seqs = [ Modified_Protein_Seqs ; Modified_Protein ];
 end
-MolW = Modified_Protein.MolW;
-Left = Modified_Protein.LeftIons;
 
 %% If Variable modification is selected
 for index = 1:size(structs_array,2)
     for index1 = 1:size(structs_array{1,index},1) % get rows in each cell of structs_array
-        Modified_Protein.MolW = MolW;
-        Modified_Protein.LeftIons = Left;
         for varIndex = 1:size(structs_array{1,index},2) % columns
             Modified_site = structs_array{1,index}(index1,varIndex);
             Modified_Protein.MolW = Modified_Protein.MolW + Modified_site.mod_MW;
