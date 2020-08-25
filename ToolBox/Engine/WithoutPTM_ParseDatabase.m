@@ -20,13 +20,13 @@ NME = Terminal_Modification(2);
 NME_Acetylation = Terminal_Modification(3);
 M_Acetylation = Terminal_Modification(4);
 BatchMode = getappdata(0, 'Batch');
-ScoringWeight2 = getappdata(0,'w2'); 
+ScoringWeight2 = getappdata(0,'w2');
 for index = 1: numel(Candidate_ProteinsListInput)
     %% Initialize Protein
     Protein = Candidate_ProteinsListInput{index};
     Sequence = Protein.Sequence;
     %% Scan database protein sequence for ESTs
-   
+    
     if FilterPSTs == 1
         if ScoringWeight2 == 0
             keepProtein = FIlter_Proteins_PST(Tags_ladder,Sequence);
@@ -45,14 +45,14 @@ for index = 1: numel(Candidate_ProteinsListInput)
     end
     
     
-% %     if FilterPSTs == 1
-% %         [Final_EST_Score] = PST_Score(Tags_ladder,Sequence); %#ok<*ASGLU>
-% %         if Final_EST_Score == 0
-% %             continue;
-% %         end
-% %     else
-% %         Final_EST_Score = 0;
-% %     end
+    % %     if FilterPSTs == 1
+    % %         [Final_EST_Score] = PST_Score(Tags_ladder,Sequence); %#ok<*ASGLU>
+    % %         if Final_EST_Score == 0
+    % %             continue;
+    % %         end
+    % %     else
+    % %         Final_EST_Score = 0;
+    % %     end
     Protein.EST_Score = Final_EST_Score;
     
     if BatchMode == 1
@@ -111,5 +111,9 @@ for index = 1: numel(Candidate_ProteinsListInput)
         end
     end
 end
-    Candidate_ProteinsList = Candidate_ProteinsList(~cellfun('isempty', Candidate_ProteinsList));
+Candidate_ProteinsList = Candidate_ProteinsList(~cellfun('isempty', Candidate_ProteinsList));
+
+if size(Candidate_ProteinsList,2)>1     %Updated 20200826
+    Candidate_ProteinsList = Candidate_ProteinsList';
+end
 end
