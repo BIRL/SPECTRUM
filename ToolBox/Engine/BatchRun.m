@@ -289,7 +289,7 @@ for i= 1:size(DirectoryContents,1)     % for mgf and text files  (all files pres
             size_data=size(data);
             for out_put=1:size_data(1)
                 %                 header=strcat('>',data{out_put,1},' | Score:',data{out_put,4},' | Molweight:',data{out_put,3},' | # Matched Feagments:',num2str(data{out_put,18}),' | Terminal Modification:',data{out_put,19},' | E-Value:',num2str(data{out_put,22}));
-                formatSpec = '> %s | Score: %f | Molweight: %f | # Matched Feagments: %d | Terminal Modification: %s | E-Value: %g';
+                formatSpec = '> %s | Score: %f | Molweight: %f | # Matched Fragments: %d | Terminal Modification: %s | E-Value: %g';
                 fprintf(menu_File,formatSpec,data{out_put,1},data{out_put,4},data{out_put,3},data{out_put,18},data{out_put,19},data{out_put,22});
                 fprintf(menu_File,'\n');
                 fprintf(menu_File,data{out_put,5});
