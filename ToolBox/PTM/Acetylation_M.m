@@ -123,7 +123,7 @@ for i = 1:size(protein_sequence, 2);
         end
         
         %It saves the score for i+4 position
-        if(size(protein_sequence, 2)>i+4)
+        if(size(protein_sequence, 2)>=i+4)  %Updated 20200924  Equal to Sign Added
             
             m=(protein_sequence (1, i+4));
             switch protein_sequence (1, i+4)
@@ -183,7 +183,7 @@ for i = 1:size(protein_sequence, 2);
         
         
         %It saves the score for i+6 position
-        if(size(protein_sequence, 2)>i+6)
+        if(size(protein_sequence, 2)>=i+6)  %Updated 20200924  Equal to Sign Added
             g=(protein_sequence (1, i+6));
             switch protein_sequence (1, i+6)
                 
