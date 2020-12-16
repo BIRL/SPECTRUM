@@ -88,27 +88,42 @@ for index = 1: numel(Candidate_ProteinsListInput)
     if tmpSeq(1) == 'M'
         if NME == 1
             RightIndex = RightIndex + 1;
-            Protein.Terminal_Modification = 'NME';
-            Protein.MolW = MolW - AA(double('M')-64);
-            Protein.LeftIons = LeftIons - AA(double('M')-64);
-            Protein.Sequence = tmpSeq(2:tmpSeqLength);
-            Candidate_ProteinsList_Right{RightIndex} = Protein;
+            %Updated 20201216 BELOW
+            temp = Protein;
+            temp.Terminal_Modification = 'NME';
+            temp.MolW = MolW - AA(double('M')-64);
+            temp.LeftIons = LeftIons - AA(double('M')-64);
+            temp.LeftIons(1) = [];  
+            temp.RightIons(length(Protein.Sequence)-1)= []; 
+            temp.EST_Score = Protein.EST_Score * (numel(Protein.Sequence)/(numel(Protein.Sequence)-1));
+            temp.Sequence = tmpSeq(2:tmpSeqLength);
+            Candidate_ProteinsList_Right{RightIndex} = temp;
+            %Updated 20201216 ABOVE
         end
         if NME_Acetylation == 1
             RightIndex = RightIndex + 1;
-            Protein.Terminal_Modification = 'NME_Acetylation';
-            Protein.MolW = MolW - AA(double('M')-64) + AcetylationWeight;
-            Protein.LeftIons = LeftIons - AA(double('M')-64)+ AcetylationWeight;
-            Protein.Sequence = tmpSeq(2:tmpSeqLength);
-            Candidate_ProteinsList_Right{RightIndex} = Protein;
+            %Updated 20201216 BELOW
+            temp = Protein;
+            temp.Terminal_Modification = 'NME_Acetylation';
+            temp.MolW = MolW - AA(double('M')-64) + AcetylationWeight;
+            temp.LeftIons = LeftIons - AA(double('M')-64)+ AcetylationWeight;
+            temp.LeftIons(1) = [];
+            temp.RightIons(length(Protein.Sequence)-1)= [];
+            temp.EST_Score = Protein.EST_Score * (numel(Protein.Sequence)/(numel(Protein.Sequence)-1));
+            temp.Sequence = tmpSeq(2:tmpSeqLength);
+            Candidate_ProteinsList_Right{RightIndex} = temp;
+            %Updated 20201216 ABOVE
         end
         if M_Acetylation == 1
             RightIndex = RightIndex + 1;
-            Protein.Terminal_Modification = 'M_Acetylation';
-            Protein.Sequence = tmpSeq;
-            Protein.MolW = MolW + AcetylationWeight;
-            Protein.LeftIons = LeftIons + AcetylationWeight;
-            Candidate_ProteinsList_Right{RightIndex} = Protein;
+            %Updated 20201216 BELOW
+            temp = Protein;
+            temp.Terminal_Modification = 'M_Acetylation';
+            temp.Sequence = tmpSeq;
+            temp.MolW = MolW + AcetylationWeight;
+            temp.LeftIons = LeftIons + AcetylationWeight;
+            Candidate_ProteinsList_Right{RightIndex} = temp;
+            %Updated 20201216 ABOVE
         end
     end
     
