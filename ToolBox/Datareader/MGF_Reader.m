@@ -55,14 +55,14 @@ while ~feof(inputfile)
         
         MS1 = strsplit(data1{1,1});
         MS1 = str2double(MS1);
-        dlmwrite(strcat(directory,f, fileName(1:numel(fileName)-4),'_',num2str(FileNameIndex),'.txt'),MS1,'delimiter','\t','newline', 'pc');
+        dlmwrite(strcat(directory,f, fileName(1:numel(fileName)-4),'_',num2str(FileNameIndex),'.txt'),MS1,'delimiter','\t','newline', 'pc','precision',16);  %Updated 20200108
         data1='END IONS';
         while(~strcmp(data,data1))
             ContainEqual = strfind(data, '=');
             if isempty(ContainEqual)
                 MS2 = strsplit(data);
                 MS2 = str2double(MS2);
-                dlmwrite(strcat(directory,f, fileName(1:numel(fileName)-4),'_',num2str(FileNameIndex),'.txt'),MS2,'-append','delimiter','\t','newline', 'pc','precision','%.6f');
+                dlmwrite(strcat(directory,f, fileName(1:numel(fileName)-4),'_',num2str(FileNameIndex),'.txt'),MS2,'-append','delimiter','\t','newline', 'pc','precision','%.13f');  %Updated 20200108
                 data=fgetl(inputfile);
             else
                 data=fgetl(inputfile);
