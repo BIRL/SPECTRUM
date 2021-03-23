@@ -160,6 +160,7 @@ for index = 1:size(structs_array,2)
         Modified_Protein.Sequence = Protein_sequence;
         Modified_Protein.Name = Protein_name; %from database
         Modified_Protein.Id = Protein_id; %from database
+        Modified_Protein.PTM_score=0;         %Updated 20210322  -- Bug fixed
         Modified_Protein.PTM_name = '';
         Modified_Protein.PTM_site = '';
         PTMIndex = 0;
