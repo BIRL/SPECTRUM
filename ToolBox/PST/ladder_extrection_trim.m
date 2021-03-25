@@ -11,29 +11,29 @@
 
 %% This Function is used for the Extrection and the Triming of the Peptide
 %  Sequece tags. It will also remove any duplicate entry present in the list
-function Tag_ladder =  ladder_extrection_trim(Ladder_raw,User_max_TagLength_Threshold,User_Taglength_min_threshold,User_tagError_threshold)
+function Tag_ladder =  ladder_extrection_trim(Ladder,User_max_TagLength_Threshold,User_Taglength_min_threshold,User_tagError_threshold)
 
 % Break the larger Tags into all possible smaller tags
-length_tags = 0;
-for LadderIndex = 1: size(Ladder_raw,1)
-    for startindex  = 1 : (size(Ladder_raw{LadderIndex,1},1))
-        for endindex = startindex : (size(Ladder_raw{LadderIndex,1},1))
-            length_tags = length_tags + 1;
-            Ladder{length_tags} = Ladder_raw{LadderIndex,1}(startindex:endindex,:); %#ok<AGROW>
-        end
-    end
-end
-
-[dummy, Index] = sort(cellfun('size', Ladder, 1), 'ascend'); %#ok<ASGLU> %% arrange the ladder in the ascending order of their size
-Ladder = Ladder(Index);
-Ladder = Ladder';
-for LadderIndex = 1: size(Ladder,1) %% Find and remove the Ledder which violate Maximum and Minimum length condition
-    if ((size(Ladder{LadderIndex,1},1)) > User_max_TagLength_Threshold  || (size(Ladder{LadderIndex,1},1)) < User_Taglength_min_threshold)
-        Ladder{LadderIndex,1} = [];
-        
-    end
-end
-Ladder = Ladder(~cellfun('isempty',Ladder)); % trim the ladder cell array
+% length_tags = 0;
+% for LadderIndex = 1: size(Ladder_raw,1)
+%     for startindex  = 1 : (size(Ladder_raw{LadderIndex,1},1))
+%         for endindex = startindex : (size(Ladder_raw{LadderIndex,1},1))
+%             length_tags = length_tags + 1;
+%             Ladder{length_tags} = Ladder_raw{LadderIndex,1}(startindex:endindex,:); %#ok<AGROW>
+%         end
+%     end
+% end
+% 
+% [dummy, Index] = sort(cellfun('size', Ladder, 1), 'ascend'); %#ok<ASGLU> %% arrange the ladder in the ascending order of their size
+% Ladder = Ladder(Index);
+% Ladder = Ladder';
+% for LadderIndex = 1: size(Ladder,1) %% Find and remove the Ledder which violate Maximum and Minimum length condition
+%     if ((size(Ladder{LadderIndex,1},1)) > User_max_TagLength_Threshold  || (size(Ladder{LadderIndex,1},1)) < User_Taglength_min_threshold)
+%         Ladder{LadderIndex,1} = [];
+%         
+%     end
+% end
+% Ladder = Ladder(~cellfun('isempty',Ladder)); % trim the ladder cell array
 Ladder = Ladder';
 
 %% 
@@ -148,30 +148,32 @@ TagLength(TagLength==-1) = [];
 Tags_Error_Array(Tags_Error_Array==-1) = [];
 Tags_Intesnsity_Array(Tags_Intesnsity_Array==-1) = [];
 
-%% Filter tags according t o fulltag error threshold -----
-Score_Error = zeros(1,numel(Errors));
-for index = 1:numel(Errors)
-    if (Tags_Error_Array(index) > User_tagError_threshold)
-        Tags{1,index} = '';
-        TagLength(1,index) = -1;
-        Tags_Intesnsity_Array(1,index) = -1;
-        Score_Error(index) = -1;
-    else
-        %% Score tags according to errors
-        Score_Error(index) = exp(-Tags_Error_Array(index)*2);
-    end
-end
-
-Tags = Tags (~cellfun('isempty',Tags));
-TagLength(TagLength==-1) = [];
-Tags_Intesnsity_Array(Tags_Intesnsity_Array==-1) = [];
-Score_Error(Score_Error==-1) = [];
-
+%% Filter tags according to fulltag error threshold -----
+% % % % % % % % % % % % % % % Score_Error = zeros(1,numel(Errors));
+% % % % % % % % % % % % % % % for index = 1:numel(Errors)
+% % % % % % % % % % % % % % %     if (Tags_Error_Array(index) > User_tagError_threshold)
+% % % % % % % % % % % % % % %         Tags{1,index} = '';
+% % % % % % % % % % % % % % %         TagLength(1,index) = -1;
+% % % % % % % % % % % % % % %         Tags_Intesnsity_Array(1,index) = -1;
+% % % % % % % % % % % % % % %         Score_Error(index) = -1;
+% % % % % % % % % % % % % % %     else
+% % % % % % % % % % % % % % %         %% Score tags according to errors
+% % % % % % % % % % % % % % %         Score_Error(index) = exp(-Tags_Error_Array(index)*2);
+% % % % % % % % % % % % % % %     end
+% % % % % % % % % % % % % % % end
+% % % % % % % % % % % % % % % 
+% % % % % % % % % % % % % % % Tags = Tags (~cellfun('isempty',Tags));
+% % % % % % % % % % % % % % % TagLength(TagLength==-1) = [];
+% % % % % % % % % % % % % % % Tags_Intesnsity_Array(Tags_Intesnsity_Array==-1) = [];
+% % % % % % % % % % % % % % % Score_Error(Score_Error==-1) = [];
+% % % % % % % % % % % % % % % 
 %% SCORING TAG LENGTH
 %% Tag_ladder Initilaization
-Tag_ladder.Score_Error = Score_Error;
+% Tag_ladder.Score_Error = Score_Error;
 Tag_ladder.Taglength = TagLength;
 Tag_ladder.Tag =  Tags;
-Scoreforlength = (TagLength).^2;
-Tag_ladder.Frequency =  Tags_Intesnsity_Array.*Scoreforlength;
+Tag_ladder.Tags_Error_Array = Tags_Error_Array;
+Tag_ladder.Tags_Intesnsity_Array = Tags_Intesnsity_Array;
+Tag_ladder.Errors = Errors;
+
 end
