@@ -14,9 +14,15 @@ BlindPTMvar = getappdata(0,'BlindPTM');
 Candidate_ProteinsList = cell(numel(Candidate_ProteinsListInput),1);
 ProteinIndex = 0;
 
-ExperimentalPeakList = getappdata(0,'Peaklist_Data');
+%%% Updated 20210409   %% BELOW
+%ExperimentalPeakList = getappdata(0,'Peaklist_Data');
+PeakListMW = getappdata(0,'Fragments_Masses');
+Intensity = getappdata(0,'Int');
+ExperimentalPeakList = [PeakListMW, Intensity];%sortrows(getappdata(0,'Peaklist_Data'));
 ExperimentalPeakList_Shifted = ExperimentalPeakList(:,1);
-Protein_ExperimentalMW = ExperimentalPeakList_Shifted(1);
+Protein_ExperimentalMW = ExperimentalPeakList_Shifted(end);  % For experimental MS1
+%%% Updated 20210409   %% ABOVE
+
 tol = 2;
 
 if BlindPTMvar == 1
