@@ -48,6 +48,17 @@ f = filesep;
 initial_path=pwd;
 setappdata(0,'inital',initial_path);
 
+ArrayOfDbFetch = 0.0;
+ArrayOfMassTuner = 0.0;
+ArrayOfUpdated_ParseDatabase = 0.0;
+ArrayOfInsilico_frags_Generator_modifier = 0.0;
+ArrayOfSpectralComparison = 0.0;
+ArrayOfTruncation = 0.0;
+ArrayOfEvalue = 0.0;
+ArrayOfPst = 0.0;
+ArrayOfBlindPtm = 0.0;
+
+
 PTM_Tolerance = getappdata(0,'PTM_Tol'); % Peptide tolerance
 HandleIon = getappdata(0,'HandleIon');
 User_EST_parameters=getappdata(0,'User_EST_parameters');
@@ -57,8 +68,15 @@ Fragmentation_Type = getappdata(0,'Fragmentation_type'); % Fragmentation type
 Experimental_Protein_Mass = getappdata(0,'Experimental_Protein_Mass'); % Experimental Proein Mass (Protein mass)
 Project_Title=getappdata(0,'Project_Title');
 progressbar('SPECTRUM: Loading Database');
+
+tic;
 Candidate_ProteinsList_Full = LoadDatabaseBatch(Selected_Database);
+ArrayOfDbFetch = ArrayOfDbFetch + toc;
+
 progressbar('SPECTRUM: Performing Search');
+
+
+
 
 for i= 1:size(DirectoryContents,1)     % for mgf and text files  (all files present in specified folder)
     clc;
@@ -153,26 +171,36 @@ for i= 1:size(DirectoryContents,1)     % for mgf and text files  (all files pres
     try
         %% tuner
         if getappdata(0,'tuner') == 1 % Executes when Auto-Tune Checkobx is on
-            Slider_Value=1;
+            Slider_Value=50;   %Updated 20210410
+            
+            tic;
             [Tuned_MolWt, ~,~ ,~,~] =  MassTuner(Slider_Value,Experimental_Protein_Mass,MW_Tolerance);
+            ArrayOfMassTuner = ArrayOfMassTuner + toc;
+            
             if(abs(Tuned_MolWt - Experimental_Protein_Mass) < 3)
                 Tuned_Mass = Tuned_MolWt;
                 Experimental_Protein_Mass = Tuned_Mass;
-                set(handles.edit_TunedMass,'String',Tuned_Mass); % The fetched Tuned Mass assigned to the Tuned Mass in Main window
-                set(handles.edit_TunedMass,'ForegroundColor',[0 0 0]); % Black Color
+                %Upated 20210410 BELOW
+%                 set(handles.edit_TunedMass,'String',Tuned_Mass); % The fetched Tuned Mass assigned to the Tuned Mass in Main window
+%                 set(handles.edit_TunedMass,'ForegroundColor',[0 0 0]); % Black Color
+                %Upated 20210410 ABOVE
             end % if ((get(handles.checkbox_TunedMass, 'Value')) == 1)
         end
         
         %% Engine
         if FilterPSTs == 1
+            tic;
             Tags_Ladder = Prep_Score_PSTs(str2num(User_EST_parameters{1}),str2num(User_EST_parameters{2}),str2num(User_EST_parameters{3}),str2num(User_EST_parameters{4})); %#ok<ST2NM>
+            ArrayOfPst = ArrayOfPst + toc;
         else
             Tags_Ladder = {};
         end
         
         FilterDB=getappdata(0,'FilterDB');
         if FilterDB
+            tic;
             [Candidate_ProteinsList_Initial,Candidate_ProteinsList_Truncated] = ParseDatabaseBatch(Candidate_ProteinsList_Full,Experimental_Protein_Mass,MW_Tolerance,Fixed_Modifications,Variable_Modifications,Tags_Ladder);
+            ArrayOfDbFetch = ArrayOfDbFetch + toc;
         else
             Candidate_ProteinsList_Initial = Candidate_ProteinsList_Full;
             %% Obtain proteins greater then MolW.
@@ -180,17 +208,34 @@ for i= 1:size(DirectoryContents,1)     % for mgf and text files  (all files pres
         end
         
         Candidate_ProteinsList_MW=Score_Mol_Weight(Candidate_ProteinsList_Initial,Experimental_Protein_Mass);
+        
+        tic;
         Candidate_ProteinsList = Updated_ParseDatabase(Experimental_Protein_Mass,Tags_Ladder,Candidate_ProteinsList_MW,PTM_Tolerance,Fixed_Modifications,Variable_Modifications );
+        ArrayOfUpdated_ParseDatabase= ArrayOfUpdated_ParseDatabase + toc;
+        
+        tic;
         Candidate_ProteinsList = Insilico_frags_Generator_modifier(Candidate_ProteinsList,Fragmentation_Type,HandleIon);
+        ArrayOfInsilico_frags_Generator_modifier = ArrayOfInsilico_frags_Generator_modifier + toc;
+        
         if BlindPTMvar == 1
+            
+            tic;
             [sizeHopeInfo,Hop_Info_name, Hop_Info_AA, Hop_Info_end, Hop_Info_start] = BlindPTM_Extraction();
             Candidate_ProteinsListModified = BlindPTM(Candidate_ProteinsList,Peptide_Tolerance, 1,PepUnit,sizeHopeInfo,Hop_Info_name, Hop_Info_AA, Hop_Info_end, Hop_Info_start);
+            ArrayOfBlindPtm = ArrayOfBlindPtm + toc;
+            
         else
             Candidate_ProteinsListModified = [];
         end
         Candidate_ProteinsList = [Candidate_ProteinsList; Candidate_ProteinsListModified];
-        Matches = Insilico_Score(Candidate_ProteinsList,getappdata(0,'Peaklist_Data'),Peptide_Tolerance,PepUnit); %% Use mass diff to estimate blind ptms.
+        
+        tic;
+        Matches = Insilico_Score(Candidate_ProteinsList,getappdata(0,'Fragments_Masses'), getappdata(0,'Int'),Peptide_Tolerance,PepUnit); %Updated 20210410 %% Use mass diff to estimate blind ptms.
+        ArrayOfSpectralComparison = ArrayOfSpectralComparison + toc;
+        
+        tic;
         Matches = BlindPTM_Localization(Matches,Experimental_Protein_Mass);
+        ArrayOfBlindPtm = ArrayOfBlindPtm + toc;
         
         %% Truncation Starts Here
         truncation = getappdata(0,'Truncation');
@@ -198,6 +243,7 @@ for i= 1:size(DirectoryContents,1)     % for mgf and text files  (all files pres
             truncation = 0;
         end
         TruncatedMatches = [];
+        tic;
         if truncation == 1
             %% Candidate_ProteinsList_Truncated = ParseDatabaseBatch_Truncation(Candidate_ProteinsList_Full,Experimental_Protein_Mass,MW_Tolerance,Tags_Ladder);
             [Candidate_ProteinsList_Left,Candidate_ProteinsList_Right] = PreTruncation(Candidate_ProteinsList_Truncated,MW_Tolerance);
@@ -229,8 +275,10 @@ for i= 1:size(DirectoryContents,1)     % for mgf and text files  (all files pres
             %% Final Scoring
             Candidate_ProteinsList = [Candidate_ProteinsList_UnModified;Candidate_ProteinsList_Modified_Left;Candidate_ProteinsList_Modified_Right];
             Candidate_ProteinsList = FIlter_Truncated_Proteins(Candidate_ProteinsList, Tags_Ladder);
-            TruncatedMatches = Insilico_Score(Candidate_ProteinsList,getappdata(0,'Peaklist_Data'),Peptide_Tolerance,PepUnit); %% Use mass diff to estimate blind ptms.
+            TruncatedMatches = Insilico_Score(Candidate_ProteinsList,getappdata(0,'Fragments_Masses'), getappdata(0,'Int'),Peptide_Tolerance,PepUnit); %Updated 20210410 %% Use mass diff to estimate blind ptms.
         end
+        ArrayOfTruncation = ArrayOfTruncation + toc;
+        
         Matches = [Matches; TruncatedMatches]; %#ok<AGROW>
         setappdata(0,'Matches',Matches);
         tElapsed = num2str(toc(batchModeTimer));
@@ -240,9 +288,11 @@ for i= 1:size(DirectoryContents,1)     % for mgf and text files  (all files pres
         
         %% Compute E-Value
         Matches=getappdata(0,'Matches');
+        tic;
         if numel(Matches) ~= 0
             Matches =  PrSM_Evalue(Matches);
         end
+        ArrayOfEvalue = ArrayOfEvalue + toc;
         
         %% For table
         data = cell(numel(Matches),22);
