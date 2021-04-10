@@ -18,8 +18,8 @@ HopInfo={} ;
 Ladder_Index = 00; %index ladder
 Num_AA=21; % Standard Amino Acids
 
-for Peak_Index = 1:(size(Peak_List,1)-1) % Hop_Index
-    for Hop_Index = (Peak_Index+1) : size(Peak_List,1)
+for Peak_Index = 1:(size(Peak_List,1)-2) % Hop_Index           % Updated 20210410   -1 Replaced to -2 
+    for Hop_Index = (Peak_Index+1) : size(Peak_List,1) - 1            % Updated 20210410   -1 Added
         Peaks_MW_Difference = Peak_List(Hop_Index) - Peak_List(Peak_Index);
         for AminoAcid_Index = 1:Num_AA % number itration increase from 20 to 39 :20 unmodified and 33 for PTM and 39 if other modification are selected
             TagError = Peaks_MW_Difference - AminoAcidsMasses(AminoAcid_Index);
