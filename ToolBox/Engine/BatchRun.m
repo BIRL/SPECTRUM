@@ -12,7 +12,7 @@ function BatchRun()
 progressbar('SPECTRUM');
 data = {};
 csvData = [cellstr('File Name'),cellstr('Protein Header'),cellstr('Terminal Modification'),cellstr('Protein Sequence'),cellstr('Protein Tuncation'),cellstr('Truncation Position'),cellstr('Score'),cellstr('Molecular Weight'),cellstr('No of Modifications'),cellstr('No of Fragments Matched'),cellstr('Run Time'),cellstr('E-Value')];
-setappdata(0,'P_condotion',1);
+%setappdata(0,'P_condotion',1);  %Updated 20210427
 Database_Path = getappdata(0,'Database_Path'); %#ok<*NASGU> % Database path of single and batch search modes
 Selected_Database = getappdata(0,'Selected_Database'); % Concatenated: Database_Path + Database selected from menu_Database
 Batch_Peaklist_Data = getappdata(0,'Batch_Peaklist_Data'); % Peaklist data for BATCH search mode
@@ -390,13 +390,13 @@ for i= 1:size(DirectoryContents,1)     % for mgf and text files  (all files pres
             fclose( menu_File);
             cd(initial_path)
         end
-        
+        isResultAvailable = 1; %Updated 20210427
     catch Error
         menu_File = fopen(Save_Batch_File,'a');
         fprintf(menu_File,'\n');
         fprintf(menu_File,'No Result Found Please search with another set of parameters');
         fclose( menu_File);
-        setappdata(0,'P_condotion',0);
+        % setappdata(0,'P_condotion',0);  %Updated 20210427
         continue ;
     end
     
@@ -410,3 +410,4 @@ end
 fclose(fid);
 cd(initial_path)
 progressbar(1/1);
+setappdata(0,'isResultAvailable',isResultAvailable); %Updated 20210427
