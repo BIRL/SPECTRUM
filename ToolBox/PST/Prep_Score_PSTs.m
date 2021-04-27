@@ -11,10 +11,20 @@
 
 %% This Fuction is used to pepare the PSTs for Protein Specific Scoring
 function [Tag_Ladder] = Prep_Score_PSTs(User_Taglength_min_threshold,User_Taglength_max_threshold,User_hop_threshold,User_tagError_threshold )
-Fragments_Peaklist_Data = getappdata(0,'Peaklist_Data');
-size_pkList = size(Fragments_Peaklist_Data,1); % Size/number of the fragments peaks
-% All fragment peaks will be extracted except the mass of the intact protein
-prot_ExperimentalPeakList = sortrows(Fragments_Peaklist_Data(1:size_pkList,:));
+
+%Updated Below 20210427
+% Fragments_Peaklist_Data = getappdata(0,'Peaklist_Data');
+
+% % All fragment peaks will be extracted except the mass of the intact protein
+% prot_ExperimentalPeakList = sortrows(Fragments_Peaklist_Data(1:size_pkList,:));
+
+Fragments_Masses = getappdata(0,'Fragments_Masses');
+size_pkList = size(Fragments_Masses ,1); % Size/number of the fragments peaks
+
+Intensity = getappdata(0,'Int');
+prot_ExperimentalPeakList = [Fragments_Masses Intensity]
+%Updated Above 20210427
+
 % extract ESTs using the find peaks function
 Tag_ladder = Extract_PSTs(prot_ExperimentalPeakList,User_Taglength_max_threshold,User_Taglength_min_threshold,User_hop_threshold,User_tagError_threshold);
 if ~isempty(Tag_ladder)
