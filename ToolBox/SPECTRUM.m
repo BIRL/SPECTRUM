@@ -1660,7 +1660,7 @@ if(strcmp('ToolBox',tool(length(tool))))
             rmpath(strcat(pwd,f,'Results'));
             rmpath(strcat(pwd,f,'Score'));
             
-            if (getappdata(0,'isResultAvailable') == 1)   %Updated 20210427 %(getappdata(0,'P_condotion')==1)
+            if(getappdata(0,'P_condotion')==1)
                 msgbox('Results  are  saved  in  Result  folder','SPECTRUM','Modal');
             else
                 msgbox('Search couldn''t complete please check your search parameters and data file.','SPECTRUM','Modal');
