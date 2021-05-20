@@ -49,8 +49,8 @@ for fixed_modification_idx = 1 : number_of_fixed_mods
         Fixed.occournaces = no_of_occournaces_F;
         Fixed.Site = Site;
         Fixed.ModW = GetWeight(fixed_modifications{fixed_modification_idx,1}(1:Site_Idx-1));
-        All_Fixed_PTMs = [All_Fixed_PTMs Fixed]; %#ok<*AGROW>    %Updated 20200803
     end
+    All_Fixed_PTMs = [All_Fixed_PTMs Fixed]; %#ok<*AGROW>
 end
 
 for index = 1:numel(All_Fixed_PTMs)
