@@ -181,7 +181,7 @@ DecoyData = sortrows(unsortedDecoyData, 7, 'descend');
 TargetData = sortrows(unsortedTargetData, 7, 'descend');
 
 Decoy = [];
-for i = 1:numel(DecoyData.FileName)    %%Updated 20201219
+for i = 1:numel(TargetData.FileName)
 Decoy = [Decoy; cellstr(DecoyData.FileName(i)) DecoyData.Score(i)];
 end
 Decoy = sortrows(Decoy,-2);
