@@ -84,7 +84,7 @@ for Num_Protein = 1:NumEntries
             end
         end
         
-        if (truncation == 0)    %Updated 20200803
+        if isempty(truncation)
             if abs(DBProtein_MW + MWeight - Protein_ExperimentalMW)<= MWTolerance + TolExt
                 Filtered_Protein= Filtered_Protein+1;
                 Candidate_ProteinsList{Filtered_Protein} = Protein;
