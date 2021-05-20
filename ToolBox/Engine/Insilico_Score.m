@@ -9,10 +9,7 @@
 %                 Last Modified on: 19-January-2019                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function Matches = Insilico_Score(Candidate_ProteinsList,ExperimentalMWs, ExperimentalIntensities,IonssMW_threshold,PepUnit)
-
-ExperimentalPeakList = [ExperimentalMWs, ExperimentalIntensities];
-
+function Matches = Insilico_Score(Candidate_ProteinsList,ExperimentalPeakList,IonssMW_threshold,PepUnit)
 Matches = cell(numel(Candidate_ProteinsList),1);
 Idx = 0;
 peakCount = numel(ExperimentalPeakList)/2;
@@ -26,9 +23,6 @@ for PeakListIndex = 1:peakCount
 end
 
 if peakCount > 16
-    
-    StartIndex = 1;   %Upadted 20210410
-    EndIndex = peakCount - 1;   %Upadted 20210410
     
     % ExperimentalPeakList(:,2) =  log10(2.162.*ExperimentalPeakList(:,2)+1)+0.50003813;
     % set matched attribute false - will be used to prevent duplicate proteins entries in final array
@@ -103,7 +97,7 @@ if peakCount > 16
         
         if strcmp(PepUnit,'Da')|| strcmp(PepUnit,'mmu')
             tol = IonssMW_threshold;
-            for PeakListIndex = StartIndex:EndIndex   %Upadted 20210410
+            for PeakListIndex = 2:peakCount
                 Consecutive = PeakListIndex;
                 %check in Left Ions
                 for left_Idx = IdxL:numofLInsilicos
@@ -419,7 +413,7 @@ if peakCount > 16
                 end
             end
         elseif strcmp(PepUnit,'ppm')
-            for PeakListIndex = StartIndex:EndIndex     %Upadted 20210410
+            for PeakListIndex = 2:peakCount
                 tol = (IonssMW_threshold * ExperimentalPeakList(PeakListIndex)) / 1000000;
                 Consecutive = PeakListIndex;
                 %check in Left Ions
@@ -734,7 +728,7 @@ if peakCount > 16
                 end
             end
         else
-            for PeakListIndex = StartIndex:EndIndex   %Upadted 20210410
+            for PeakListIndex = 2:peakCount
                 tol = (IonssMW_threshold * ExperimentalPeakList(PeakListIndex)) / 100;
                 Consecutive = PeakListIndex;
                 %check in Left Ions
