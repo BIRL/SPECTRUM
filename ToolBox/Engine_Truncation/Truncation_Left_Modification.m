@@ -33,8 +33,8 @@ CO = C + O;
 %20181019 - Fixing the overloaded function error
 %tol = 2
 % Experimental peak extraction and peak fliping.
-ExperimentalSpectrum = ExperimentalPeakList; %Updated 20210410 %sortrows(getappdata(0,'Peaklist_Data'));
-% MolW = ExperimentalSpectrum(size(ExperimentalSpectrum,1));
+ExperimentalSpectrum = sortrows(getappdata(0,'Peaklist_Data'));
+MolW = ExperimentalSpectrum(size(ExperimentalSpectrum,1));
 
 if size(ExperimentalSpectrum,1) == 1
     tolConv = ExperimentalSpectrum(size(ExperimentalSpectrum,1));
