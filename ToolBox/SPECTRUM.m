@@ -283,7 +283,7 @@ elseif (strcmpi(extension,'.mgf'))
         SS = strcat(Directory,DirectoryContents(i).name);
         Imported_Data =  importdata(SS);
         progressbar(i/(size(DirectoryContents,1)));
-        if(numel(Imported_Data)>numel(previous) && Imported_Data(1,1)> 113) %Checking the file for max number of scans and MS1 should be greater than 113. Although no mass of protein is equal to this but we are considering as GG but still its a peptide    %Updated 20210111
+        if(numel(Imported_Data)>numel(previous))
             previous = Imported_Data;
             Expermintal_Protein_Mass = Imported_Data(1,1);
             set(handles.edit_ProteinMass,'String',Expermintal_Protein_Mass);
@@ -328,7 +328,7 @@ elseif (strcmpi(extension,'.mzxml'))
         SS = strcat(filepath,f,DirectoryContents(i).name);
         Imported_Data =  importdata(SS);
         progressbar(i/(size(DirectoryContents,1)));
-        if(numel(Imported_Data)>numel(previous) && Imported_Data(1,1)> 113) %Checking the file for max number of scans and MS1 should be greater than 113. Although no mass of protein is equal to this but we are considering as GG but still its a peptide    %Updated 20210111
+        if(numel(Imported_Data)>numel(previous))
             previous = Imported_Data;
             Expermintal_Protein_Mass = Imported_Data(1,1);
             set(handles.edit_ProteinMass,'String',Expermintal_Protein_Mass);
@@ -375,7 +375,7 @@ elseif (strcmpi(extension,'.mzml'))
         SS = strcat(Directory,DirectoryContents(i).name);
         Imported_Data =  importdata(SS);
         progressbar(i/(size(DirectoryContents,1)));
-        if(numel(Imported_Data)>numel(previous) && Imported_Data(1,1)> 113) %Checking the file for max number of scans and MS1 should be greater than 113. Although no mass of protein is equal to this but we are considering as GG but still its a peptide    %Updated 20210111
+        if(numel(Imported_Data)>numel(previous) && Imported_Data(1,1)~=1.0073)  %Updated 20201216
             previous = Imported_Data;
             Expermintal_Protein_Mass = Imported_Data(1,1);
             set(handles.edit_ProteinMass,'String',Expermintal_Protein_Mass);
