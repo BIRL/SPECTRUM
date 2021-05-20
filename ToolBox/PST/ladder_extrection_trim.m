@@ -95,42 +95,15 @@ if numel(unique(Tags)) ~= numel(Tags)
                     TagLength(1,start2) = -1;
                     Tags_Error_Array(1,start2) = -1;
                     Tags_Intesnsity_Array(1,start2) = -1;                    
-                %% Else  
-                %%%ADDED BELOW %Updated 20201216
-                elseif (Error_sum > Error_sum1)
-                        Tags{1,start1} = '';
-                        Errors(1,start1) = -1;
-                        TagLength(1,start1) = -1;
-                        Tags_Error_Array(1,start1) = -1;
-                        Tags_Intesnsity_Array(1,start1) = -1;
-                        start1 = start2;
-                else     %Error_sum == Error_sum1
-                    if(Tags_Intesnsity_Array(1,start1) <= Tags_Intesnsity_Array(1,start2))
-                        Tags{1,start1} = '';
-                        Errors(1,start1) = -1;
-                        TagLength(1,start1) = -1;
-                        Tags_Error_Array(1,start1) = -1;
-                        Tags_Intesnsity_Array(1,start1) = -1;
-                        start1 = start2;
-                    elseif(Tags_Intesnsity_Array(1,start1) > Tags_Intesnsity_Array(1,start2))   %file 210
-                        Tags{1,start2} = '';
-                        Errors(1,start2) = -1;
-                        TagLength(1,start2) = -1;
-                        Tags_Error_Array(1,start2) = -1;
-                        Tags_Intesnsity_Array(1,start2) = -1;
-                    end
+                %% Else    
+                else
+                    Tags{1,start1} = '';
+                    Errors(1,start1) = -1;
+                    TagLength(1,start1) = -1;
+                    Tags_Error_Array(1,start1) = -1;
+                    Tags_Intesnsity_Array(1,start1) = -1;
+                    start1 = start2;
                 end
-                %%%Added ABOVE %Updated 20201216
-                %%%DISCARD BELOW %Updated 20201216
-%                 else
-%                     Tags{1,start1} = '';
-%                     Errors(1,start1) = -1;
-%                     TagLength(1,start1) = -1;
-%                     Tags_Error_Array(1,start1) = -1;
-%                     Tags_Intesnsity_Array(1,start1) = -1;
-%                     start1 = start2;
-%                 end
-                %%%Discard ABOVE
             else
                 start1 = start2;
                 break;
