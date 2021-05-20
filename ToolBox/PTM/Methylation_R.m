@@ -310,7 +310,7 @@ for i = 1:size(protein_sequence, 2); %loop will run over the whole protein lengt
         
         %it will score amino acid at position i+5
         if(size(protein_sequence, 2)>=i+5)
-            m=(protein_sequence (1, i+5));  %Updated 20200426
+            m=(protein_sequence (1, i+3));
             switch protein_sequence (1, i+5)
                 case {'A'}
                     score =  score * 0.06;
@@ -375,7 +375,7 @@ for i = 1:size(protein_sequence, 2); %loop will run over the whole protein lengt
         end
         if (score>=PTM_tolerance)
             %it will store the protein sub-sequence in AA_a .
-            AA = [b ,c , d, e, f, g, (protein_sequence (1, i)), h, j ,k ,l ,m ,n];
+            AA = [b ,c , d, e, f, g, (protein_sequence (1, i)), (protein_sequence (1, i+1)), h, j ,k ,l ,m ,n];
             
             %             x = x + 1;
             %             Sites(x) = {i,score, mod_weight , mod_name, site, AA};
