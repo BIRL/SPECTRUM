@@ -1325,24 +1325,21 @@ if(strcmp('ToolBox',tool(length(tool))))
                 Slider_Value=50;
                 addpath('IntactMassTuner');
                 [Tuned_MolWt, ~,~ ,~,~] =  MassTuner(Slider_Value,Experimental_Protein_Mass,MW_Tolerance);
-                %                 if(abs(Tuned_MolWt - Experimental_Protein_Mass) > 3)
-                %                     button = questdlg(sprintf('INVALID PARAMETERS - Either MS1 or MS2 are not accurate enough to perform Mass Tuning.\nWould you still like to run Mass Tuner?'),'SPECTRUM');
-                %                     if strcmp(button,'Yes')
-                %                         WholeProteinMWEstimator
-                %                     else
-                %                         msgbox(sprintf('Protein Search Couldn''t complete.\nDeactivate Auto-Tune option in main GUI to proceed.'), 'Error','warn');
-                %                         return
-                %                     end
-                %                 else
-                %                     WholeProteinMWEstimator;
-                %                 end
-                
-                
-                if(abs(Tuned_MolWt - Experimental_Protein_Mass) < 3)   
-                    Tuned_Mass = getappdata(0,'Tuned_Mass');
-                    Experimental_Protein_Mass = str2double(Tuned_Mass);  %Tuned_MolWt; %Updated 20210410  %
+                if(abs(Tuned_MolWt - Experimental_Protein_Mass) > 3)
+                    button = questdlg(sprintf('INVALID PARAMETERS - Either MS1 or MS2 are not accurate enough to perform Mass Tuning.\nWould you still like to run Mass Tuner?'),'SPECTRUM');
+                    if strcmp(button,'Yes')
+                        WholeProteinMWEstimator
+                    else
+                        msgbox(sprintf('Protein Search Couldn''t complete.\nDeactivate Auto-Tune option in main GUI to proceed.'), 'Error','warn');
+                        return
+                    end
+                else
+                    WholeProteinMWEstimator;
                 end
+                
                 % Fetching the tuned mass from WholeProteinMWEstimator window
+                Tuned_Mass = getappdata(0,'Tuned_Mass');
+                Experimental_Protein_Mass = str2double(Tuned_Mass);
                 set(handles.edit_TunedMass,'String',Tuned_Mass); % The fetched Tuned Mass assigned to the Tuned Mass in Main window
                 set(handles.edit_TunedMass,'ForegroundColor',[0 0 0]); % Black Color
             else
