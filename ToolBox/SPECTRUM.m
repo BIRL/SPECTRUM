@@ -1500,7 +1500,7 @@ if(strcmp('ToolBox',tool(length(tool))))
                     progressbar(6/8);
                     
                     %% Spectral Comparison
-                    Matches = Insilico_Score(Candidate_ProteinsList,getappdata(0,'Fragments_Masses'), getappdata(0,'Int'),Peptide_Tolerance,PepUnit); %Updated 20210410 %% Use mass diff to estimate blind ptms.
+                    Matches = Insilico_Score(Candidate_ProteinsList,getappdata(0,'Peaklist_Data'),Peptide_Tolerance,PepUnit); %% Use mass diff to estimate blind ptms.
                     
                     %% Localizing Unknown mass shift
                     Matches = BlindPTM_Localization(Matches,Experimental_Protein_Mass);
@@ -1541,7 +1541,7 @@ if(strcmp('ToolBox',tool(length(tool))))
                         %% Final Scoring
                         Candidate_ProteinsList = [Candidate_ProteinsList_UnModified;Candidate_ProteinsList_Modified_Left;Candidate_ProteinsList_Modified_Right];
                         Candidate_ProteinsList = FIlter_Truncated_Proteins(Candidate_ProteinsList, Tags_Ladder);
-                        TruncatedMatches = Insilico_Score(Candidate_ProteinsList,getappdata(0,'Fragments_Masses'), getappdata(0,'Int'),Peptide_Tolerance,PepUnit);  %Updated 20210410 %% Use mass diff to estimate blind ptms.
+                        TruncatedMatches = Insilico_Score(Candidate_ProteinsList,getappdata(0,'Peaklist_Data'),Peptide_Tolerance,PepUnit); %% Use mass diff to estimate blind ptms.
                         rmpath(strcat(pwd,f,'Engine_Truncation'));
                     end
                     rmpath(strcat(pwd,f,'Engine'));
