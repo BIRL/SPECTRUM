@@ -39,28 +39,21 @@ for Peak_Index = 1:(size(Peak_List,1)-1) % Hop_Index
     end
 end
 
-%Num_AAs_Found=(length(HopInfo)-1);
-Num_AAs_Found=(length(HopInfo));
-
+Num_AAs_Found=(length(HopInfo)-1);
 length_tags=1;
 Ladder_raw={};
-index = 1;
-for Home_peak=1:(Num_AAs_Found-1)   %(Num_AAs_Found-1)
-    for Strat_peak=1:(Num_AAs_Found-1)   %(Num_AAs_Found-1)
+for Home_peak=1:(Num_AAs_Found-1)
+    for Strat_peak=1:(Num_AAs_Found-1)
         AA_NextAdder=''; %#ok<NASGU>
         Hop_peak=(Strat_peak+1);
         if(HopInfo{Home_peak}{2}==HopInfo{Hop_peak}{1})
-            
-            AA_NextAdder =[HopInfo{Home_peak};HopInfo{Hop_peak}]; %#ok<*AGROW>
-            Ladder_raw{index,1}= AA_NextAdder;
-            index = index + 1;
             % branches and position
-            %             AA_Next=Join(Hop_peak,length_tags,HopInfo,Num_AAs_Found,User_max_TagLength_Threshold+1);
-            %             for iter = 1 : numel(AA_Next)
-            %                 AA_NextAdder=[HopInfo{Home_peak};AA_Next{iter,1}]; %#ok<*AGROW>
-            %                 Ladder_raw{length_tags,1}= AA_NextAdder;
-            %                 length_tags = length_tags+1;
-            %             end
+            AA_Next=Join(Hop_peak,length_tags,HopInfo,Num_AAs_Found,User_max_TagLength_Threshold+1);
+            for iter = 1 : numel(AA_Next)
+                AA_NextAdder=[HopInfo{Home_peak};AA_Next{iter,1}]; %#ok<*AGROW>
+                Ladder_raw{length_tags,1}= AA_NextAdder;
+                length_tags = length_tags+1;
+            end
         end
         if (HopInfo{Home_peak}{2} < HopInfo{Hop_peak}{1})
             break;
@@ -69,7 +62,6 @@ for Home_peak=1:(Num_AAs_Found-1)   %(Num_AAs_Found-1)
 end
 
 if(~isempty(Ladder_raw))
-    Ladder_raw = MultipleTags(Ladder_raw, User_max_TagLength_Threshold,User_Taglength_min_threshold,User_Hop_Threshold,User_tagError_threshold, HopInfo);
     LaddersList = ladder_extrection_trim(Ladder_raw,User_max_TagLength_Threshold,User_Taglength_min_threshold,User_tagError_threshold);
 end
 end
