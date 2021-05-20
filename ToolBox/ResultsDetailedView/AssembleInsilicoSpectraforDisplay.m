@@ -49,9 +49,9 @@ for LeftIndex = 1 : numel(Match.LeftMatched_Index)
     end
     xx = Match.LeftMatched_Index(LeftIndex);
     ID = [ID;xx];
-    temp_thr = round ( Left(xx), 4 );     %Updated 20200826
-    temp_mz = round ( Fragments_Peaklist_Data(Match.LeftPeak_Index(LeftIndex)), 4 );     %Updated 20200826
-    temp_Err = round ( abs (temp_mz - temp_thr), 4 );     %Updated 20200826
+    temp_thr = Left(xx);
+    temp_mz = Fragments_Peaklist_Data(Match.LeftPeak_Index(LeftIndex));
+    temp_Err = abs (temp_mz - temp_thr);
     mz = [mz;temp_mz];
     thr = [thr; temp_thr];
     Err = [Err; temp_Err];
@@ -81,9 +81,9 @@ for RightIndex = numel(Match.RightMatched_Index):-1:1
     end
     rr = numel(Match.LeftIons)- Match.RightMatched_Index(RightIndex);
     ID = [ID;rr+2];
-    temp_thr = round ( Right(Match.RightMatched_Index(RightIndex)), 4 );     %Updated 20200826
-    temp_mz = round ( Fragments_Peaklist_Data(Match.RightPeak_Index(RightIndex)), 4 );     %Updated 20200826
-    temp_Err = round ( abs (temp_mz - temp_thr), 4 );     %Updated 20200826
+    temp_thr = Right(Match.RightMatched_Index(RightIndex));
+    temp_mz = Fragments_Peaklist_Data(Match.RightPeak_Index(RightIndex));
+    temp_Err = abs (temp_mz - temp_thr);
     mz = [mz;temp_mz];      %experimental_mz
     thr = [thr; temp_thr];  %theoretical_mz
     Err = [Err; temp_Err];
@@ -91,7 +91,7 @@ end
 
 data = [];
 for i = 1 : numel(mz)
-    a = [num2cell(i) num2cell(ID(i))   cellstr(name(i,:))   num2cell(mz(i))  num2cell(thr(i))  num2cell(Err(i))];     %Updated 20200826
+    a = [num2cell(i) num2cell(ID(i))   cellstr(name(i))   num2cell(mz(i))  num2cell(thr(i))  num2cell(Err(i))];
     data = [data;a];
 end
 
