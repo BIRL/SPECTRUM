@@ -1337,7 +1337,7 @@ if(strcmp('ToolBox',tool(length(tool))))
                 %                     WholeProteinMWEstimator;
                 %                 end
                 
-                Tuned_Mass = getappdata(0,'Tuned_Mass');  %Updated 20210504  %
+                Tuned_Mass = getappdata(0,'Tuned_Mass');  %Updated 20210410  %
                 if(abs(Tuned_MolWt - Experimental_Protein_Mass) < 3)   
                     Experimental_Protein_Mass = str2double(Tuned_Mass);  %Tuned_MolWt; %Updated 20210410  %
                 end
