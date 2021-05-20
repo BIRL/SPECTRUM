@@ -375,7 +375,7 @@ elseif (strcmpi(extension,'.mzml'))
         SS = strcat(Directory,DirectoryContents(i).name);
         Imported_Data =  importdata(SS);
         progressbar(i/(size(DirectoryContents,1)));
-        if(numel(Imported_Data)>numel(previous) && Imported_Data(1,1)~=1.0073)  %Updated 20201216
+        if(numel(Imported_Data)>numel(previous))
             previous = Imported_Data;
             Expermintal_Protein_Mass = Imported_Data(1,1);
             set(handles.edit_ProteinMass,'String',Expermintal_Protein_Mass);
