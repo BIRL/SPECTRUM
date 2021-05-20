@@ -13,14 +13,9 @@ function [Candidate_ProteinsList] = Truncation_Left_Modification(Candidate_Prote
 Candidate_ProteinsList = cell(numel(Candidate_ProteinsListInput),1);
 ProteinIndex = 0;
 
-%%% Updated 20210409   %% BELOW
-%ExperimentalPeakList = getappdata(0,'Peaklist_Data');
-PeakListMW = getappdata(0,'Fragments_Masses');
-Intensity = getappdata(0,'Int');
-ExperimentalPeakList = [PeakListMW, Intensity];%sortrows(getappdata(0,'Peaklist_Data'));
+ExperimentalPeakList = getappdata(0,'Peaklist_Data');
 ExperimentalPeakList_Shifted = ExperimentalPeakList(:,1);
-Protein_ExperimentalMW = ExperimentalPeakList_Shifted(end);  % For experimental MS1
-%%% Updated 20210409   %% ABOVE
+Protein_ExperimentalMW = ExperimentalPeakList_Shifted(1);
 
 Proton = 1.00727647;
 H = 1.007825035;

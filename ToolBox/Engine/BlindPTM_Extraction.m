@@ -11,13 +11,7 @@
 function [sizeHopeInfo,Hop_Info_name, Hop_Info_AA, Hop_Info_end, Hop_Info_start] = BlindPTM_Extraction( )
 
 % Experimental peak extraction and peak fliping.
-%%% Updated 20210409   %% BELOW
-%ExperimentalSpectrum = sortrows(getappdata(0,'Peaklist_Data'));
-PeakListMW = getappdata(0,'Fragments_Masses');
-Intensity = getappdata(0,'Int');
-ExperimentalSpectrum = [PeakListMW, Intensity];%sortrows(getappdata(0,'Peaklist_Data'));
-%%% Updated 20210409   %% ABOVE
-
+ExperimentalSpectrum = sortrows(getappdata(0,'Peaklist_Data'));
 MolW = ExperimentalSpectrum(size(ExperimentalSpectrum,1));
 
 User_Hop_Threshold = 1;

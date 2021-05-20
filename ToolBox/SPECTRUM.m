@@ -2175,20 +2175,12 @@ try
         end
         Imported_Data(i,2) = Imported_Data(i,2)/m;
     end
-    
-    %%% Updated 20210409   %% BELOW
-    temp_Imported_Data = Imported_Data(2:end, :);
-    Sorted = sortrows(temp_Imported_Data,1);
-    %Sorted = sortrows(Imported_Data,1);
+    Sorted = sortrows(Imported_Data,1);
     PeakListMW = Sorted(:,1);
     Intensity = Sorted(:,2);
-    PeakListMW(end+1) = Imported_Data(1,1);
-    Intensity(end+1) = Imported_Data(1,2);
-    setappdata(0,'Peaklist_Data',Imported_Data);  % MS1 then, MS2s with their intensities [Original Order]
-    setappdata(0,'Fragments_Masses',PeakListMW);  % MS2s (in ascending order) then, MS1 only 
-    setappdata(0,'Int',Intensity);                % Only intensities of corresponding to the PeakListMW (MS values)
-    %%% Updated 20210409   %% ABOVE
-    
+    setappdata(0,'Peaklist_Data',Imported_Data);
+    setappdata(0,'Fragments_Masses',PeakListMW);
+    setappdata(0,'Int',Intensity);
 catch exception %#ok<NASGU>
     msgbox('File not found or Invalid Data File');
 end
