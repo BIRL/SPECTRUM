@@ -7,7 +7,7 @@ EndIndex = size(Ladder_raw,1);
 
 while LoopRun
     for HopPeakIndex = StartIndex: EndIndex
-        TagLength =  size( Ladder_raw{HopPeakIndex,1},1);
+        TagLength =  size( Ladder_raw{HopPeakIndex,1},1)
         DoubleTagEndIndex = Ladder_raw{HopPeakIndex,1}{end,2};
         
         for SinglePstHomePeakIndex = 1:size(HopInfo,2)
